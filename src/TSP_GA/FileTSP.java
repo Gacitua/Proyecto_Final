@@ -19,10 +19,10 @@ import static TSP_GA.FileTSP.permutar;
 import java.util.List;
 
 
-/**
- * Esta clase guarda toda la información obtenida del archivo .tsp
- * @author JavierAros
- */
+    /***************************
+     *Lectura del archivo TSP
+     * 
+     ***************************/
 public class FileTSP {
 
     static int dimension;
@@ -56,12 +56,8 @@ public class FileTSP {
         while (st.hasMoreTokens()) {
             String str=st.nextToken();
             archivo[i]=String.valueOf(str);
-            
-            //System.out.print(archivo[i]);
             i=i+1;
         }
-        //System.out.println();
-        //System.out.print(archivo[3]);
       }
       
       br.close();
@@ -71,10 +67,8 @@ public class FileTSP {
     }
     String[] parts;
         parts = archivo[3].split(" ");
-    //int dimension;
         dimension = Integer.parseInt(parts[1]);
         String[][] aux = new String[dimension][];
-        //int[][] edgWeightSection;
         edgWeightSection = new int[dimension][dimension];
     
     for(int j=8; j<8+dimension;j++){
@@ -90,7 +84,6 @@ public class FileTSP {
                 y=y+1;
             }
         }
-        //System.out.println(Arrays.toString(edgWeightSection[x]));
         x=x+1;
         y=0;
     }
@@ -110,25 +103,15 @@ public class FileTSP {
                 y=y+1;
             }
         }
-        //System.out.println(Arrays.toString(displayDataSelection[x]));
         x=x+1;
         y=0;
     }
-    
- 
-
-    
-
   } //Final de main
     /***************************
      *Algorítmo de Fisher-Yates (Población Inicial)
      * @return 
      ***************************/
-    
-    public static int[] permutar(int eleccion){
-    
-    
-
+    public static int[] permutar(){
     int[] a= new int[dimension];  
     for (int s=1; s<=dimension;s++){
         a[s-1]=s;
@@ -143,28 +126,16 @@ public class FileTSP {
         a[az]=a[k];
         a[k]=tmp;
     }
-    /***************************
-     ***************************/
-    int Costo=0;            //Almacena el costo total de viajar
-    int City1;              //Posición de la ciudad de inicio
-    int City2;              //Posición de la ciudad de destinto
-    for (int s=0;s<dimension;s++){
-        City1=a[s];
-        if((s+1)<dimension){   //
-            City2=a[s+1];}
-        else{City2=a[0];}
-        Costo=edgWeightSection[City1-1][City2-1]+Costo;
-    }
-    //String [] per_cost= new String[2];
-    //per_cost[0]=Arrays.toString(a);
-    //per_cost[1]=Integer.toString(Costo);
-    int [][] per_cost= new int[2][dimension];
-    per_cost[0]=a;
-    per_cost[1][0]=Costo;
-    return per_cost[eleccion];
-    
+    int [] per= new int[dimension];
+    per=a;
+    return per;
     }
 
+    
+    /***************************
+     * Calcula el Fitness
+     * Equivalente al costo del trayecto
+     ***************************/
 public static int fitness(int[] a){
     int Costo=0;            //Almacena el costo total de viajar
     int City1;              //Posición de la ciudad de inicio
@@ -176,21 +147,12 @@ public static int fitness(int[] a){
         else{City2=a[0];}
         Costo=edgWeightSection[City1-1][City2-1]+Costo;
     }
-    //String [] per_cost= new String[2];
-    //per_cost[0]=Arrays.toString(a);
-    //per_cost[1]=Integer.toString(Costo);
-
     return Costo;
 }
 
-/**
- * Class for the Partial Matching Crossover (PMX).
- * PMX is a crossover operator function for combinatorial optimization. It is specially useful for mixing permutaitions.
- * This implementation of PMX works for integer permutation from 1,..,n or 0,n-1.
- * @author César Astudillo <cesar dot astudillo at gmail dot com>
- */
+
     /***************************
-     *2-OPT
+     *2-OPT (Mutación)
      * @param ruta
      * @param i
      * @param k
@@ -211,62 +173,23 @@ public static int fitness(int[] a){
         System.arraycopy(Ruta, k, Mutado, k, Ruta.length-k);
         return Mutado;
     }/*
-   2optSwap(route, i, k) {
-       1. take route[1] to route[i-1] and add them in order to new_route
-       2. take route[i] to route[k] and add them in reverse order to new_route
-       3. take route[k+1] to end and add them in order to new_route
-       return new_route;
-   }*/
 
 
-    /**
-     * PMX crossover
+
+    
+    /***************************
+     *PMX(Crossover)
+     * 
+     ***************************/
+    /*
      *
-     * @param x first individual
-     * @param y second individual
-     * @param index1 index of the beginning of the crossover segment
-     * @param index2 end of the crossover segment
+     * @param Padre
+     * @param Madre
+     * @param inicio
+     * @param fin
      * @return
      */
-    public static int[] PMX(int[] x, int[] y, int index1, int index2) {
-
-        boolean visited[] = new boolean[x.length+1]; //all false, are the node visited?
-
-        int[] z = new int[x.length];//same dimensions as x
-        for (int i = index1; i <= index2; i++) {
-            z[i] = x[i];
-            visited[z[i]] = true;
-        }
-        int k = index1;
-        //Traverse parent2
-        for (int i = index1; i <= index2; i++) { //para cada elemento del segmente
-
-            if (!visited[y[i]]) {
-                k = i;
-                int elementToBeCopied = y[i]; //copiando el elemento desde la madre
-                do {
-                    int V = x[k];
-                    //search in the mother ofr the index where the V is.
-                    for (int j = 0; j < y.length; j++) {
-                        if (y[j] == V) {
-                            k = j;
-                        }
-                    }
-                } while (z[k] != 0);
-                z[k] = elementToBeCopied;
-                visited[z[k]] = true;
-            }
-        }
-        
-        //copy the reminder elements from y
-        
-        for (int i = 0; i < z.length; i++) {
-            if(z[i]==0)
-                z[i]=y[i];
-        }
-        return z;
-    }
-    public static int[][] PMX2(int[] Padre, int[] Madre, int inicio, int fin) {
+    public static int[][] PMX(int[] Padre, int[] Madre, int inicio, int fin) {
         int [] Hijo;
         int [] Hija;
         int [][] Decendientes;
