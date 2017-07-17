@@ -15,13 +15,14 @@ import TSP_GA.FileTSP;
 import TSP_GA.GA;
 import TSP_GA.SetupGA;
 import java.util.Arrays;
+
 /**
  *
  * @author castudil
  */
 
 public class Interfaz extends javax.swing.JFrame {
-    
+    static SetupGA FormGA = new SetupGA();
     
     String Directorio;
     /**
@@ -30,9 +31,13 @@ public class Interfaz extends javax.swing.JFrame {
     public Interfaz() {
         
         initComponents();
-                SetupGA FormGA = new SetupGA();
+        
+        
         FormGA.setVisible(true);
         FormGA.setVisible(false);
+        //this.setAlwaysOnTop(true); 
+        this.requestFocus();
+        
 
         
     }
@@ -139,9 +144,9 @@ public class Interfaz extends javax.swing.JFrame {
 
     private void jbSetupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSetupActionPerformed
 
-        SetupGA FormGA = new SetupGA();
         FormGA.setVisible(true);
-        dispose();
+        this.setVisible(false);
+        
     }//GEN-LAST:event_jbSetupActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

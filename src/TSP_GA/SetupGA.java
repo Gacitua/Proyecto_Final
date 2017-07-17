@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package TSP_GA;
-
+import static TSP_GA.Interfaz.FormGA;
 /**
  *
  * @author Matías
@@ -16,6 +16,8 @@ public class SetupGA extends javax.swing.JFrame {
      */
     public SetupGA() {
         initComponents();
+
+        //FormGA.setVisible(true);
     }
 
     /**
@@ -53,11 +55,16 @@ public class SetupGA extends javax.swing.JFrame {
 
         psize.setText("10000");
 
-        pcross.setText("0.6");
+        pcross.setText("0.9");
 
         pmut.setText("0.001");
 
         tmax.setText("100000");
+        tmax.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tmaxActionPerformed(evt);
+            }
+        });
 
         k.setText("3");
 
@@ -134,8 +141,14 @@ public class SetupGA extends javax.swing.JFrame {
     private void jbVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVolverActionPerformed
         Interfaz FormV = new Interfaz();
         FormV.setVisible(true);
-        dispose();
+        this.setVisible(false);
+        //dispose();
+        
     }//GEN-LAST:event_jbVolverActionPerformed
+
+    private void tmaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tmaxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tmaxActionPerformed
 
     /**
      * @param args the command line arguments

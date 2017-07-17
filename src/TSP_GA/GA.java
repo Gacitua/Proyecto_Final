@@ -50,7 +50,7 @@ int[] FitnessP;
 Poblacion = new int[psize][dimension];
 FitnessP=new int[psize];
 for (int i=0;i<psize;i++){
-    Poblacion[i]=FileTSP.permutar(0);           //Genera la población inicial
+    Poblacion[i]=FileTSP.permutar();           //Genera la población inicial
     FitnessP[i]=FileTSP.fitness(Poblacion[i]);  //Cálcula el fitness del cromosoma
 }
     /***************************
@@ -76,9 +76,7 @@ for (int j=0;j<2;j++){                                    //Doble torneo, para e
     Mejor_F_Torneo[1]=cromosoma;
     for(int i=1;i<k;i++){                                 //El ciclo se repite hasta el número máximo de participantes
         cromosoma=(int) (Math.random()*psize-1);          //Elige un cromosoma al azar del total de la población
-        //System.out.println(cromosoma);
         Participantes_Torneo[i][0]=FitnessP[cromosoma];   //Se guarda el Fitness del participante
-        //System.out.println(FitnessP[cromosoma]);
         Participantes_Torneo[i][1]=cromosoma;             //Se guarda la posición del cromosoma en la población
         if(Mejor_F_Torneo[0]>Participantes_Torneo[i][0]){ //Selecciona al mejor de los 2 contrincantes
             Mejor_F_Torneo[0]=Participantes_Torneo[i][0]; //Guarda el Fitness del mejor
@@ -99,13 +97,14 @@ for (int j=0;j<2;j++){                                    //Doble torneo, para e
     int[] Hijo =new int[Papa.length];
     int[] Hija =new int[Mama.length];
     if(Math.random()<pcross){
-        Hijo=FileTSP.PMX2(Papa, Mama, intervalo[0], intervalo[1])[0];
-        Hija=FileTSP.PMX2(Papa, Mama, intervalo[0], intervalo[1])[1];
+        Hijo=FileTSP.PMX(Papa, Mama, intervalo[0], intervalo[1])[0];
+        Hija=FileTSP.PMX(Papa, Mama, intervalo[0], intervalo[1])[1];
     }
     else{
         Hijo=Papa;
         Hija=Mama;
     }
+  
     /***************************
      *2-OPT
      * MUTACIÓN
@@ -157,7 +156,7 @@ for (int j=0;j<2;j++){                                    //Doble torneo, para e
     Convergencia[t][0]=t;
     Convergencia[t][1]=Mejor_Cromo;
     
-    Interfaz.jtaCosto.setText("Iteración número: " + t);
+    //Interfaz.jtaCosto.setText("Iteración número: " + t);
 
     }//Final tmax
 
@@ -186,7 +185,10 @@ for (int j=0;j<2;j++){                                    //Doble torneo, para e
                 JFrame ventana = new JFrame("Grafica");
                 ventana.setVisible(true);
                 ventana.setSize(800, 600);
-                ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 ventana.add(panel);
     }
 }
+
+//SOLUCIÓN: {1,28,6,12,9,5,26,29,3,2,20,10,4,15,18,17,14,22,11,19,25,7,23,27,8,24,16,13,21}
+//VALOR: 2020

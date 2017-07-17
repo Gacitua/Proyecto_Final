@@ -134,7 +134,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="pcross">
       <Properties>
-        <Property name="text" type="java.lang.String" value="0.6"/>
+        <Property name="text" type="java.lang.String" value="0.9"/>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
@@ -152,6 +152,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="100000"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tmaxActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="8"/>
       </AuxValues>
